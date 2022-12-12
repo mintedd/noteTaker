@@ -29,24 +29,10 @@ app.get('/api/notes', (req, res) => res.status(200).json(dbData));
 // app.use('/', htmlRouter);
 // app.use('/api', apiRouter);
 
-app.get('api/notes/:notes_id', (req, res) => {
+app.get('api/notes/:id', (req, res) => {
     res.json(`${req.method} request recieved`);
     console.info(req.rawHeaders);
     console.info(`${req.method} request recieved`);
-
-    // if (req.body && req.params.notes_id) {
-    //     console.info(`${req.method} request received to add a note`);
-    //     const notesId = req.params.notes_id;
-    //     for (let i = 0; i < notes.length; i++) {
-    //         const currentNotes = notes[i];
-    //         if (currentNotes.notes_id === notesId) {
-    //             currentNotes.notes += 1;
-    //             res.status(200).json(`New note is: ${currentNotes.notes}!`);
-    //             return;
-    //         }
-    //     }
-    //     res.status(404).json('Review ID not found');
-    // }
 });
 
 app.post('/api/notes', (req, res) => {
@@ -61,7 +47,7 @@ app.post('/api/notes', (req, res) => {
         const newNotes = {
             title,
             text,
-            review_id: uuid(),
+            id: uuid(),
         };
 
         //write the string to a file
@@ -86,6 +72,20 @@ app.post('/api/notes', (req, res) => {
                 );
             }
         });
+        if (req.body && req.params.id) {
+            console.info(`${req.method} request received to add a note`);
+            const notesId = req.params.id;
+            console.log(notes.length);
+            for (let i = 0; i < notes.length; i++) {
+                const currentNotes = notes[i];
+                if (currentNotes.id === notesId) {
+                    currentNotes.notes += 1;
+                    res.status(200).json(`New note is: ${currentNotes.notes}!`);
+                    return;
+                }
+            }
+            res.status(404).json('Review ID not found');
+        }
         const response = {
             status: 'success',
             body: newNotes,
@@ -100,21 +100,24 @@ app.post('/api/notes', (req, res) => {
 
 });
 
-app.post('/api/notes/:notes_id', (req, res) => {
-    // if (req.body && req.params.notes_id) {
-    //     console.info(`${req.method} request received to add a note`);
-    //     const notesId = req.params.notes_id;
-    //     for (let i = 0; i < notes.length; i++) {
-    //         const currentNotes = notes[i];
-    //         if (currentNotes.notes_id === notesId) {
-    //             currentNotes.notes += 1;
-    //             res.status(200).json(`New note is: ${currentNotes.notes}!`);
-    //             return;
-    //         }
-    //     }
-    //     res.status(404).json('Review ID not found');
-    // }
-});
+// app.delete('/api/notes/:id', (req, res) => {
+//     if (req.body && req.params.id) {
+//         console.info(`${req.method} request received to add a note`);
+//         const notesId = req.params.id;
+//         console.log(notes.length);
+//         for (let i = 0; i < notes.length; i++) {
+//             const currentNotes = notes[i];
+//             if (currentNotes.id === notesId) {
+//                 currentNotes.notes += 1;
+//                 res.status(200).json(`New note is: ${currentNotes.notes}!`);
+//                 return;
+//             }
+//         }
+//         res.status(404).json('Review ID not found');
+//     }
+// });
+
+
 
 
 app.listen(PORT, () => {
