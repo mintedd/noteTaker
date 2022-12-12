@@ -8,20 +8,20 @@ api.get('/notes', (res, req) => {
 });
 
 api.post('/notes', (req, res) => {  
-    const { title, text, id } = req.body;
+    // const { title, text, id } = req.body;
   
-    if (req.body) {
-      const notes = {
-        title,
-        text,
-        id: uuid(),
-      };
+    // if (req.body) {
+    //   const notes = {
+    //     title,
+    //     text,
+    //     id: uuid(),
+    //   };
   
-      readAndAppend(notes, '../db/db.json');
-      res.json(`Note added successfully 🚀`);
-    } else {
-      res.error('Error in adding note');
-    }
+    //   readAndAppend(notes, '../db/db.json');
+    //   res.json(`Note added successfully 🚀`);
+    // } else {
+    //   res.error('Error in adding note');
+    // } part of this is in the index.js? so i dont need it
   });
 
 api.delete('/api/notes', (res, req) => {
