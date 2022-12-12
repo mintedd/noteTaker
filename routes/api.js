@@ -1,7 +1,6 @@
 const api = require('express').Router();
 const { readFromFile, readAndAppend } = require('../helpers/fsUtils');
 const uuid = require('../helpers/uuid');
-const fs = require('fs');
 
 api.get('/notes', (res, req) => {
     readFromFile('../db/db.json').then((data) => res.json(JSON.parse(data)));
